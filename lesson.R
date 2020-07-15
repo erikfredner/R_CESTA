@@ -90,6 +90,10 @@ lines <- unlist(strsplit(x = son_18, split = "\n"))
 length(lines)
 lines
 
+###################
+# STOPPED HERE
+###################
+
 # Text Cleaning
 # put to lowercase for counting
 lines.clean <- tolower(lines)
