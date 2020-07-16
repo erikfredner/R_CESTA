@@ -15,7 +15,7 @@
 (1 + 1) * 2
 
 # Strings
-'this is a string' #single quotes or double quotes are fine ('/")
+'This is a string.' #single quotes or double quotes are fine ('/")
 
 # Variables
 # You can store objects in variables using the <- symbol:
@@ -100,7 +100,6 @@ cool
 # The second argument, split, is the character to split by.
 # Finally, we wrap that in the function unlist() to get the lines into a single vector:
 cool <- unlist(strsplit(x = cool, split = "\n"))
-lines
 # We may want to get rid of empty lines, since we won't be counting any words there.
 # First we have to identify our blank lines:
 cool != ''
@@ -123,7 +122,7 @@ corp <- tm_map(corp, content_transformer(removeWords), stopwords('en')) # Englis
 corp <- tm_map(corp, content_transformer(stripWhitespace))
 
 # What does our text look like after cleaning?
-lapply(corp, as.character) #lapply applies the function as.character to our list
+lapply(corp, as.character) #lapply applies the function as.character to our vector
 
 # Note that by removing stopwords, the word "we" gets removed.
 # Here is the list of default English stopwords; you can customize it if you wish:
@@ -138,27 +137,24 @@ inspect(dtm)
 # Sentiment analysis with SentimentAnalysis
 install.packages('SentimentAnalysis')
 library('SentimentAnalysis')
-lines <- unlist(lapply(corp, as.character))
-sentiment <- analyzeSentiment(lines)
+# lines <- unlist(lapply(corp, as.character))
+sentiment <- analyzeSentiment(corp)
+sentiment
 # This provides a lot of output, which we can simplify
-# GI is for Harvard General Inquirer, which is probably most interesting for literature
+# GI is for Harvard General Inquirer, which is probably most interesting for poetry
 columns <- c('WordCount', 'SentimentGI', 'NegativityGI', 'PositivityGI')
 cbind(lines, sentiment[columns])
 
-# Sentiment analysis with syuzhet
+# There are many ways of computing sentiment scores
 # syuzhet includes other sentiment dictionaries
 install.packages('syuzhet')
 library('syuzhet')
 lines <- unlist(lapply(corp, as.character))
-sentiments <- lapply(lines, get_sentiment) # get_sentiment is a function from syuzhet
-# Let's take a look at these results
-cbind(lines, sentiments) # cbind() binds vectors as columns in a matrix or data frame
 
-# But what are these sentiment scores?
 # syuzhet includes several different methods, which we can compare below:
 afinn <- lapply(lines, get_sentiment, method = 'afinn')
 bing <- lapply(lines, get_sentiment, method = 'bing')
-nrc <- lapply(lines, get_sentiment, method = 'nrc')
+nrc <- lapply(lines, get_sentiment, method = 'nrc') # displays a warning
 syu <- lapply(lines, get_sentiment, method = 'syuzhet') #package default
 
 # Let's look at all of these side-by-side:
@@ -179,17 +175,16 @@ newCorp <- tm_map(newCorp, content_transformer(stripWhitespace))
 # We'll attach a little metadata this time:
 meta(newCorp, 'filename') <- list.files(path)
 meta(newCorp)
-# We can add arbitrary amounts of metadata:
+# We can add arbitrary amounts of metadata using this method
 meta(newCorp, 'president') <- c(rep('Obama', 4), rep('Trump', 4))
 
 # Let's get the Harvard General Inquirer categories for these:
-sentiments <- analyzeSentiment(newCorp)
+sentiments <- analyzeSentiment(newCorp) # displays a warning about what tm is doing
 
-# Now, to make some meaning out of this we need to attach a little bit of metadata:
-data <- cbind(meta(newCorp), sentiments[columns])
+data <- cbind(meta(newCorp), sentiments[columns]) # attach our metadata to our sentiments
 data
 
-# So let's get mean sentiment by president:
+# Let's aggregate HGI sentiment by president:
 
 #overall
 aggregate(x = data$SentimentGI,
@@ -206,7 +201,7 @@ aggregate(x = data$PositivityGI,
           by = list(data$president),
           FUN = mean)
 
-# Not what I would have expected!
+# Not what I would have expected! Do other sentiment dictionaries provide different results?
 
 # Bonus tidbits about tm:
 
