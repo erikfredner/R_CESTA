@@ -1,0 +1,4 @@
+- [ ] convert R file to Bookdown document: https://bookdown.org/yihui/rmarkdown/notebook.html
+- [ ] set up sentiment analysis section, confirm package preferences (currently `syuzhet`)
+- [ ] test against Nichole's corpus
+- [ ] test on Windows
