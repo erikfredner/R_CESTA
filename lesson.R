@@ -166,11 +166,63 @@ cbind(lines, afinn, bing, nrc, syu)
 
 # Expanding to a larger corpus
 # You can also point tm at a directory of folders to create a corpus:
+path <- '/Users/e/code/R_CESTA/corpus' # this needs to be changed for your computer!
+newCorp <- Corpus(DirSource(path))
 
+# Let's clean it the same way we did before:
+newCorp <- tm_map(newCorp, content_transformer(removePunctuation))
+newCorp <- tm_map(newCorp, content_transformer(removeNumbers))
+newCorp <- tm_map(newCorp, content_transformer(tolower))
+newCorp <- tm_map(newCorp, content_transformer(removeWords), stopwords('en')) # English stopwords
+newCorp <- tm_map(newCorp, content_transformer(stripWhitespace))
 
-# We might also want to stem the document, which requires another package:
-# Stemming 
+# We'll attach a little metadata this time:
+meta(newCorp, 'filename') <- list.files(path)
+meta(newCorp)
+# We can add arbitrary amounts of metadata:
+meta(newCorp, 'president') <- c(rep('Obama', 4), rep('Trump', 4))
+
+# Let's get the Harvard General Inquirer categories for these:
+sentiments <- analyzeSentiment(newCorp)
+
+# Now, to make some meaning out of this we need to attach a little bit of metadata:
+data <- cbind(meta(newCorp), sentiments[columns])
+data
+
+# So let's get mean sentiment by president:
+
+#overall
+aggregate(x = data$SentimentGI,
+          by = list(data$president),
+          FUN = mean)
+
+#negativity
+aggregate(x = data$NegativityGI,
+          by = list(data$president),
+          FUN = mean)
+
+#positivity
+aggregate(x = data$PositivityGI,
+          by = list(data$president),
+          FUN = mean)
+
+# Not what I would have expected!
+
+# Bonus tidbits about tm:
+
+# What are the most frequent non-stopwords in our corpus?
+dtm <- DocumentTermMatrix(newCorp)
+inspect(dtm)
+
+# Which words are frequent?
+findFreqTerms(dtm, lowfreq = 100) #lowfreq sets the minimum number of times a term must appear
+
+# Which words correlate with a given term?
+findAssocs(dtm, 'job', corlimit = 0.9)
+
+# In some cases, we might want to stem the corpus
+# Stemming reduces words to their root form.
+# For example, display, displayed, and displaying would all be stemmed to display.
 install.packages('SnowballC')
 library('SnowballC')
-corp_stemmed <- tm_map(corp, content_transformer(stemDocument))
-lapply(corp_stemmed, as.character)
+newCorp <- tm_map(newCorp, content_transformer(stemDocument))
