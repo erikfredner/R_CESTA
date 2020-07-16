@@ -1,10 +1,8 @@
-# TODO: convert this into a bookdown document
 # Welcome to R and RStudio
 # R is the programming language. And RStudio is our integrated developer environment (IDE).
 # Pound symbols indicate comments on the code, which the computer does not interpret.
 
-# Move your cursor to any line in this file and hit Command  +  Enter/Return
-# This also works for multi-line blocks.
+# Move your cursor to any line in this file and hit Command + Enter/Return to run it.
 
 # Getting started:
 
@@ -33,7 +31,7 @@ myVariable / 3
 # A function performs operations on the object(s) you pass it.
 # Some functions are built-in: 
 abs(-100) # absolute value
-round(-99.9)
+round(99.9)
 sum(1,2,3,4,5)
 
 # You can apply some functions to strings:
@@ -46,13 +44,13 @@ yell
 
 # Booleans
 # You can evaluate expressions as true or false:
-2 < 3
+2 < 3 # x less than y
 2 == 3 # == tests equivalence
 2 != 3 # != tests non-equivalence
 
-# There are also special values for true and false:
-TRUE
-FALSE
+# There are also reserved words for true and false:
+TRUE == T
+FALSE == F
 
 # Vectors
 # Vectors are one-dimensional groupings of objects
@@ -68,37 +66,81 @@ c(6,3,1) < 5
 # Vectors have indexes, which are integers corresponding to positions in the vector
 # N.B. R indexes begin with 1. Some other languages like Python index from 0.
 myVector <- c('apple', 'banana', 'cantaloupe')
+myVector
 myVector[1]
 myVector[2]
 myVector[3]
+myVector[2:3]
 
-# Let's work with a poem:
-son_18 <- "Shall I compare thee to a summer's day?
-Thou art more lovely and more temperate:
-Rough winds do shake the darling buds of May,
-And summer's lease hath all too short a date:"
+# Text Mining in R
+
+# Let's work with a poem, Gwendolyn Brooks's "We Real Cool"
+cool <- "                   THE POOL PLAYERS. 
+                   SEVEN AT THE GOLDEN SHOVEL.
+
+We real cool. We
+Left school. We
+
+Lurk late. We
+Strike straight. We
+
+Sing sin. We
+Thin gin. We
+
+Jazz June. We
+Die soon."
+
 # Note how the line breaks are encoded: \n, which refers to a "newline" (hence the n)
-son_18
+cool
 
 # Let's split this poem into a vector, where each element is one line of the poem.
-# First, we use the \n character to split by line.
+# First, we'll use the \n character to split by line.
 # To do that, we need to pass multiple arguments to the function strsplit()
 # The first argument, x, is the object to be acted on.
-# The second, split, is the character to split by.
+# The second argument, split, is the character to split by.
 # Finally, we wrap that in the function unlist() to get the lines into a single vector:
-lines <- unlist(strsplit(x = son_18, split = "\n"))
-length(lines)
+cool <- unlist(strsplit(x = cool, split = "\n"))
 lines
-
-###################
-# STOPPED HERE
-###################
+# We may want to get rid of empty lines, since we won't be counting any words there.
+# First we have to identify our blank lines:
+cool != ''
+# We can then use the T/F vector above to filter them out:
+cool <- cool[cool != '']
+cool
 
 # Text Cleaning
+# We could do all this manually, but there are packages designed for this such as tm.
+install.packages('tm')
+library('tm') # this loads the package
+# We're going to use the tm VCorpus object to create a Corpus out of the Brooks poem:
+corp <- VCorpus(VectorSource(cool))
+
+# Now that we have the coolCorpus object in the form tm expects, we can clean it up:
+corp <- tm_map(corp, content_transformer(removePunctuation))
+corp <- tm_map(corp, content_transformer(removeNumbers))
+corp <- tm_map(corp, content_transformer(tolower))
+corp <- tm_map(corp, content_transformer(removeWords), stopwords('en')) # English stopwords
+corp <- tm_map(corp, content_transformer(stripWhitespace))
+
+# What does our text look like after cleaning?
+lapply(corp, as.character) #lapply applies a function to a list
+
+# Note that by removing stopwords, the word "we" gets removed.
+# Here is the list of stopwords; you can customize it if you wish:
+stopwords('en')
+
+# We might also want to stem the document, which requires another package:
+# Stemming 
+install.packages('SnowballC')
+library('SnowballC')
+corp_stemmed <- tm_map(corp, content_transformer(stemDocument))
+lapply(corp_stemmed, as.character)
+
 # put to lowercase for counting
 lines.clean <- tolower(lines)
-lines.clean[14]
+lines.clean[2]
 # remove punctuation
+
 # split lines into characters
 lines.clean <- unlist(strsplit(lines.clean, ""))
 lines.clean
