@@ -12,8 +12,11 @@ Participants need to install two pieces of free software:
 The lesson also depends on several R packages such as [`tm`](https://cran.r-project.org/web/packages/tm/index.html), which we will install as we go.
 
 ### Testing your setup
-Once you have installed both R and RStudio, open RStudio. If you want to test your installation, type the following at the `>` prompt:
-`print('hello, world')`
+Once you have installed both R and RStudio, open RStudio.
+If you want to test your installation, type the following at the `>` prompt:
+```R
+print('hello, world')
+```
 
 If it works, you should see the following:
 ```R
