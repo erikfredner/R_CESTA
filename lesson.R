@@ -179,7 +179,7 @@ meta(newCorp, 'president') <- c(rep('Obama', 4), rep('Trump', 4))
 meta(newCorp)
 
 # Let's get the Harvard General Inquirer categories for these:
-sentiments <- analyzeSentiment(newCorp) # displays a warning about what tm is doing
+sentiments <- analyzeSentiment(newCorp) # displays warnings about what tm is doing
 
 data <- cbind(meta(newCorp), sentiments[columns]) # attach our metadata to our sentiments
 data
@@ -191,7 +191,7 @@ aggregate(x = data[,3:length(data)], # all rows, columns 3 through the number of
 
 # Not what I would have expected! Do other sentiment dictionaries provide different results?
 
-# Bonus tidbits about tm:
+# Bonus tidbits:
 
 # What are the most frequent non-stopwords in our corpus?
 dtm <- DocumentTermMatrix(newCorp)
@@ -209,3 +209,11 @@ findAssocs(dtm, 'job', corlimit = 0.9)
 install.packages('SnowballC')
 library('SnowballC')
 newCorp <- tm_map(newCorp, content_transformer(stemDocument))
+
+# Suppose you want to import or export a csv into R:
+data
+# export:
+write.csv(data, file = '~/Downloads/my_data.csv')
+
+# and you can import an existing file like so:
+importedData <- read.csv(file = '~/Downloads/my_data.csv')
