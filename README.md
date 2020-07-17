@@ -19,5 +19,5 @@ Students who are interested in learning more about R may wish to check out some 
 - [Long and Teetor, *R Cookbook, 2nd Edition*](https://searchworks.stanford.edu/view/13463372)
 
 ### Text Mining
-- [Jockers, *Text Analysis with R for Students of Literature* (2020)](https://searchworks.stanford.edu/view/13575408)
+- [Jockers, *Text Analysis with R for Students of Literature*](https://searchworks.stanford.edu/view/13575408)
 - [Silge, *Text Mining with R: A Tidy Approach*](https://www.tidytextmining.com)
