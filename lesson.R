@@ -185,7 +185,6 @@ data <- cbind(meta(newCorp), sentiments[columns]) # attach our metadata to our s
 data
 
 # Let's aggregate HGI sentiment by president:
-
 aggregate(x = data[,3:length(data)], # all rows, columns 3 through the number of columns in data
           by = list(data$president),
           FUN = mean)
