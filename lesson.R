@@ -2,7 +2,7 @@
 # R is the programming language. And RStudio is our integrated developer environment (IDE).
 # Pound symbols indicate comments on the code, which the computer does not interpret.
 
-# Move your cursor to any line in this file and hit Command + Enter/Return to run it.
+# Move your cursor to any line in this file and hit Command (ctrl on Windows) + Enter/Return to run it.
 
 # Getting started:
 
@@ -11,7 +11,7 @@
 1 - 1
 1 * 2
 1 / 2
-# Parentheses resolve first
+# Parentheses resolve first (aka R follows the order of operations you may have learned as PEMDAS)
 (1 + 1) * 2
 
 # Strings
@@ -29,7 +29,7 @@ myVariable / 3
 
 # Functions
 # A function performs operations on the object(s) you pass it.
-# Some functions are built-in: 
+# Some functions are built-in:
 abs(-100) # absolute value
 round(99.9)
 sum(1,2,3,4,5)
@@ -75,7 +75,7 @@ myVector[2:3]
 # Text Mining in R
 
 # Let's work with a poem, Gwendolyn Brooks's "We Real Cool"
-cool <- "                   THE POOL PLAYERS. 
+cool <- "                   THE POOL PLAYERS.
                    SEVEN AT THE GOLDEN SHOVEL.
 
 We real cool. We
@@ -162,7 +162,7 @@ cbind(lines, afinn, bing, nrc, syu)
 
 # Expanding to a larger corpus
 # You can also point tm at a directory of folders to create a corpus:
-path <- '/Users/e/code/R_CESTA/corpus' # this needs to be changed for your computer!
+path <- '/Users/e/code/R_CESTA/corpus' # this needs to be changed for your computer! (For Windows: after copying the path, change '\' to '/')
 newCorp <- Corpus(DirSource(path))
 
 # Let's clean it the same way we did before:
