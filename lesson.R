@@ -137,7 +137,7 @@ inspect(dtm)
 # Sentiment analysis with SentimentAnalysis
 install.packages('SentimentAnalysis')
 library('SentimentAnalysis')
-# lines <- unlist(lapply(corp, as.character))
+lines <- unlist(lapply(corp, as.character))
 sentiment <- analyzeSentiment(corp)
 sentiment
 # This provides a lot of output, which we can simplify
@@ -149,7 +149,7 @@ cbind(lines, sentiment[columns])
 # syuzhet includes other sentiment dictionaries
 install.packages('syuzhet')
 library('syuzhet')
-lines <- unlist(lapply(corp, as.character))
+#lines <- unlist(lapply(corp, as.character))
 
 # syuzhet includes several different methods, which we can compare below:
 afinn <- lapply(lines, get_sentiment, method = 'afinn')
