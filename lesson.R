@@ -174,9 +174,9 @@ newCorp <- tm_map(newCorp, content_transformer(stripWhitespace))
 
 # We'll attach a little metadata this time:
 meta(newCorp, 'filename') <- list.files(path)
-meta(newCorp)
 # We can add arbitrary amounts of metadata using this method
 meta(newCorp, 'president') <- c(rep('Obama', 4), rep('Trump', 4))
+meta(newCorp)
 
 # Let's get the Harvard General Inquirer categories for these:
 sentiments <- analyzeSentiment(newCorp) # displays a warning about what tm is doing
@@ -186,18 +186,7 @@ data
 
 # Let's aggregate HGI sentiment by president:
 
-#overall
-aggregate(x = data$SentimentGI,
-          by = list(data$president),
-          FUN = mean)
-
-#negativity
-aggregate(x = data$NegativityGI,
-          by = list(data$president),
-          FUN = mean)
-
-#positivity
-aggregate(x = data$PositivityGI,
+aggregate(x = data[,3:length(data)], # all rows, columns 3 through the number of columns in data
           by = list(data$president),
           FUN = mean)
 
