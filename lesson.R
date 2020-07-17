@@ -2,7 +2,8 @@
 # R is the programming language. And RStudio is our integrated developer environment (IDE).
 # Pound symbols indicate comments on the code, which the computer does not interpret.
 
-# Move your cursor to any line in this file and hit Command (ctrl on Windows) + Enter/Return to run it.
+# You can pass any line in this file directly to the console below:
+# Command (Mac) or Ctrl (Windows/Linux) + Enter/Return to run it.
 
 # Getting started:
 
@@ -15,7 +16,7 @@
 (1 + 1) * 2
 
 # Strings
-'This is a string.' #single quotes or double quotes are fine ('/")
+'This is a string.' #single quotes or double quotes are equivalent ('/")
 
 # Variables
 # You can store objects in variables using the <- symbol:
