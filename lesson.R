@@ -197,13 +197,16 @@ aggregate(x = data[,3:length(data)], # all rows, columns 3 through the number of
 dtm <- DocumentTermMatrix(newCorp)
 inspect(dtm)
 
-# Which words are frequent?
+# Which words are most frequent across the whole corpus?
 findFreqTerms(dtm, lowfreq = 100) #lowfreq sets the minimum number of times a term must appear
+
+# Which words are most frequent within each document?
+findMostFreqTerms(dtm)
 
 # Which words correlate with a given term?
 findAssocs(dtm, 'job', corlimit = 0.9)
 
-# In some cases, we might want to stem the corpus
+# For some questions, we might want to stem the corpus
 # Stemming reduces words to their root form.
 # For example, display, displayed, and displaying would all be stemmed to display.
 install.packages('SnowballC')
