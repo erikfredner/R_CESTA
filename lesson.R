@@ -22,9 +22,11 @@
 # You can store objects in variables using the <- symbol:
 myVariable <- 'my string'
 myVariable
+
+# NB: in the "Environment" panel in RStudio, you can see your variables and content ->
+
 # New data overwrites existing:
 myVariable <- 3
-myVariable
 # You can use variables in calculations:
 myVariable / 3
 
@@ -34,6 +36,12 @@ myVariable / 3
 abs(-100) # absolute value
 round(99.9)
 sum(1,2,3,4,5)
+
+# Built-in functions have documentation explaining what they do.
+# Type a function's name in the editor, hit tab, and you will see the arguments it can take:
+round()
+# To view the documentation for a function, hit F1
+# You can also select Help in the bottom-right panel, and search the function name.
 
 # You can apply some functions to strings:
 toupper('i am yelling') # upper as in uppercase
