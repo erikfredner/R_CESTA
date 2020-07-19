@@ -28,11 +28,4 @@
   * any and all of the decisions we make today you might not want to make on another project!
 * Example: "We Real Cool"
   * direct text input
-  * convert into a `VCorpus`
-  * drop empty lines
-  * clean using `tm`
-  * view cleaned corpus
-  * create `DocumentTermMatrix` to demonstrate counting
-* Sentiment analysis with `syuzhet`
-  * 
-
+  * Sentiment analysis
